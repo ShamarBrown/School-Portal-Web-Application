@@ -1,0 +1,15 @@
+<!doctype html>
+<!-- David Scott, 2507305. Add all group members and lab times before submission. -->
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Student administration</title><link rel="stylesheet" href="css/admin.css"><script defer src="js/admin.js"></script></head>
+<body><header>School portal <span>Administration</span></header><main>
+<h1>Student registry</h1>
+<section><h2 id="formTitle">Register a student</h2>
+<form id="registry"><label>Student ID<input id="studentId" required maxlength="24"></label>
+<label>Full name<input id="fullName" required maxlength="90"></label>
+<label>Semester<select id="semester"><option>Semester 1</option><option>Semester 2</option></select></label>
+<button>Save student</button><button type="button" class="secondary" id="cancel" hidden>Cancel edit</button></form></section>
+<section><h2>Registered students</h2><label>Filter by semester<select id="filter"><option value="">All semesters</option><option>Semester 1</option><option>Semester 2</option></select></label>
+<div class="scroll"><table><thead><tr><th scope="col">Student ID</th><th scope="col">Name</th><th scope="col">Semester</th><th scope="col">Actions</th></tr></thead><tbody id="rows"></tbody></table></div></section>
+<section><h2>Subject grades</h2><form id="gradeForm"><label>Student<select id="gradeStudent" required></select></label><label>Subject<input id="subject" required maxlength="60"></label><label>Grade (%)<input id="score" type="number" required min="0" max="100" step="0.1"></label><button>Save grade</button></form>
+<details><summary>Upload grades from a CSV file</summary><p>Use the header <code>studentId,subject,score</code> and one grade per line. Use existing student IDs and scores from 0 to 100. A matching student and subject updates the existing grade.</p><form id="upload"><label>Grades file<input type="file" id="csv" accept=".csv,text/csv" required></label><button>Import grades</button></form></details><div class="scroll"><table><thead><tr><th>Student ID</th><th>Subject</th><th>Grade (%)</th><th>Actions</th></tr></thead><tbody id="grades"></tbody></table></div></section>
+<p role="status" id="message"></p></main></body></html>
