@@ -1,3 +1,4 @@
+// Shamar Brown, 2501074.
 document.addEventListener("DOMContentLoaded", async () => {
   const form = document.getElementById("Form");
   if (!form) return;                       
