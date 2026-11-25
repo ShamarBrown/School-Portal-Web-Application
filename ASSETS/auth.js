@@ -1,3 +1,4 @@
+/* auth.js, login, session, lockout, role guard */
 const Session_Minutes = 30;
 const Max_attempts = 3;
 const lockout_seconds = 30;
