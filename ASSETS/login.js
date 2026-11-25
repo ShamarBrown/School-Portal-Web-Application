@@ -1,10 +1,12 @@
 // Shamar Brown, 2501074.
+/* login.js, connects login form (id="Form") to auth.js */
 document.addEventListener("DOMContentLoaded", async () => {
   const form = document.getElementById("Form");
-  if (!form) return;                       
+  if (!form) return;            // not the login page            
 
-  await initDatabase();                   
-
+  await initDatabase();            // seed defaults first       
+ 
+  // Already logged in you skip the form
   const existing = getSession();
   if (existing && Rolehomepages[existing.role]) {
     window.location.replace(Rolehomepages[existing.role]);
@@ -14,12 +16,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   const nameInput = document.getElementById("fullName");
   const emailInput = document.getElementById("email");
   const idInput = document.getElementById("ID");
-
+ 
+  // The form has no ID-error or general-error element, so they are create here
   const idError = makeErrorElement("idError", idInput, "afterend");
   const formError = makeErrorElement("formError", form.querySelector("button"), "beforebegin");
 
   form.addEventListener("submit", async (event) => {
-    event.preventDefault();                
+    event.preventDefault();                  // stop the page reloading 
 
     const fullName = nameInput.value.trim();
     const email = emailInput.value.trim();
@@ -58,7 +61,8 @@ function setText(id, message) {
   const el = document.getElementById(id);
   if (el) el.textContent = message;
 }
-
+// Creates a <small class="error"> 
+// position is "beforebegin" or "afterend"
 function makeErrorElement(id, anchor, position) {
   let el = document.getElementById(id);
   if (!el) {

@@ -1,4 +1,5 @@
 // Shamar Brown, 2501074.
+//auth.js, login, session, lockout, role guard
 const Session_Minutes = 30;
 const Max_attempts = 3;
 const lockout_seconds = 30;
@@ -8,7 +9,7 @@ const Rolehomepages = {
   teacher: "teacher-dashboard.html",
   student: "student-dashboard.html"
 };
-
+//lockout code
 function getLockoutremaining() {
   const lockout = dbGet(DBkeys.LOCKOUT, { attempts: 0, expires: 0 });
   const remaining = Math.ceil((lockout.expires - Date.now()) / 1000);
@@ -28,7 +29,7 @@ function recordFailedAttempt() {
 function clearLockout() {
   localStorage.removeItem(DBkeys.LOCKOUT);
 }
-
+//session code
 function createSession(id, fullName, role) {
   sessionStorage.setItem(DBkeys.SESSION, JSON.stringify({
     id: id,
@@ -37,7 +38,7 @@ function createSession(id, fullName, role) {
     expires: Date.now() + Session_Minutes * 60 * 1000
   }));
 }
-
+// Returns the session if missing/expired/corrupt it returns null
 function getSession() {
   try {
     const session = JSON.parse(sessionStorage.getItem(DBkeys.SESSION));
@@ -47,7 +48,8 @@ function getSession() {
   }
   return null;
 }
-
+// Login, role is found from the matching record
+// Returns ok: true it returns the role but if ok: false it returns message
 async function login(fullName, email, idNumber) {
   const wait = getLockoutremaining();
   if (wait > 0) {
@@ -57,7 +59,7 @@ async function login(fullName, email, idNumber) {
   const name = fullName.trim().toLowerCase();
   const mail = email.trim().toLowerCase();
   const id = idNumber.trim();
-
+  // Staff (admin / teacher): the ID is compared as a hash
   const idHash = await hashText(id);
   const staff = dbGet(DBkeys.USERS).find(u =>
     String(u.fullName).trim().toLowerCase() === name &&
@@ -69,7 +71,7 @@ async function login(fullName, email, idNumber) {
     createSession(id, staff.fullName, staff.role);
     return { ok: true, role: staff.role };
   }
-
+  // Students
   const student = dbGet(DBkeys.STUDENTS).find(s =>
     String(s.studentId).trim() === id &&
     String(s.email).trim().toLowerCase() === mail &&
@@ -84,7 +86,7 @@ async function login(fullName, email, idNumber) {
   recordFailedAttempt();
   return { ok: false, message: "Those details don't match any account." };
 }
-
+//Logout and route guard
 function logout() {
   sessionStorage.removeItem(DBkeys.SESSION);
   window.location.replace("index.html");
@@ -99,7 +101,7 @@ function requireRole(allowedRoles) {
   }
   return true;
 }
-
+// One call per protected page: guard/back-button fix/logout button
 function guardPage(allowedRoles) {
   requireRole(allowedRoles);
   window.addEventListener("pageshow", () => requireRole(allowedRoles));
