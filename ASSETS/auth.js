@@ -1,3 +1,4 @@
+// Shamar Brown, 2501074.
 /* auth.js, login, session, lockout, role guard */
 const Session_Minutes = 30;
 const Max_attempts = 3;
