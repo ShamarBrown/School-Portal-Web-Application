@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Munro College | Financial Management</title>
+    <link rel="stylesheet" href="../ASSETS/finance.css">
+    <script src="../ASSETS/finance.js" defer></script>
+</head>
+
+<body>
+
+    <header>
+        <img src="../ASSETS/munroLogo.webp" alt="Munro College Logo" class="logo">
+        <div>
+            <h1>MUNRO COLLEGE</h1>
+            <p>Financial Management Portal</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="finance.html" class="active">Finances</a></li>
+            <li><a href="reports.html">Reports</a></li>
+        </ul>
+    </nav>
+
+    <main>
+
+        <section class="page-heading">
+            <h2>Financial Dashboard</h2>
+            <p>Manage tuition fees, payments and outstanding balances.</p>
+        </section>
+
+        <!-- Financial Summary -->
+        <section class="summary">
+
+            <div class="summary-card">
+                <h3>Total Tuition</h3>
+                <p id="totalTuition">JMD $0.00</p>
+            </div>
+
+            <div class="summary-card">
+                <h3>Total Collected</h3>
+                <p id="totalCollected">JMD $0.00</p>
+            </div>
+
+            <div class="summary-card">
+                <h3>Outstanding Balance</h3>
+                <p id="totalOutstanding">JMD $0.00</p>
+            </div>
+
+            <div class="summary-card">
+                <h3>Fully Paid Students</h3>
+                <p id="paidStudents">0</p>
+            </div>
+
+        </section>
+
+        <!-- Tuition Management -->
+        <section class="panel">
+
+            <h2>Assign Tuition Fee</h2>
+
+            <form id="tuitionForm">
+
+                <label for="tuitionStudent">Student</label>
+                <select id="tuitionStudent" required>
+                    <option value="">Select Student</option>
+                </select>
+
+                <label for="tuitionSemester">Semester</label>
+                <select id="tuitionSemester" required>
+                    <option value="">Select Semester</option>
+                    <option value="1">Semester 1</option>
+                    <option value="2">Semester 2</option>
+                </select>
+
+                <label for="tuitionAmount">Tuition Amount (JMD)</label>
+                <input type="number" id="tuitionAmount"
+                    min="1" step="0.01" required>
+
+                <button type="submit">Assign Tuition</button>
+
+            </form>
+
+            <p id="tuitionMessage" aria-live="polite"></p>
+
+        </section>
+
+        <!-- Payment Management -->
+        <section class="panel">
+
+            <h2>Record Payment</h2>
+
+            <form id="paymentForm">
+
+                <label for="paymentStudent">Student</label>
+                <select id="paymentStudent" required>
+                    <option value="">Select Student</option>
+                </select>
+
+                <label for="paymentSemester">Semester</label>
+                <select id="paymentSemester" required>
+                    <option value="">Select Semester</option>
+                    <option value="1">Semester 1</option>
+                    <option value="2">Semester 2</option>
+                </select>
+
+                <label for="paymentAmount">Payment Amount (JMD)</label>
+                <input type="number" id="paymentAmount"
+                    min="0.01" step="0.01" required>
+
+                <label for="paymentDate">Payment Date</label>
+                <input type="date" id="paymentDate" required>
+
+                <label for="paymentMethod">Payment Method</label>
+                <select id="paymentMethod" required>
+                    <option value="">Select Payment Method</option>
+                    <option value="Cash">Cash</option>
+                    <option value="Card">Card</option>
+                    <option value="Bank Transfer">Bank Transfer</option>
+                </select>
+
+                <button type="submit">Record Payment</button>
+
+            </form>
+
+            <p id="paymentMessage" aria-live="polite"></p>
+
+        </section>
+
+        <!-- Financial Ledger -->
+        <section class="panel">
+
+            <h2>Student Financial Ledger</h2>
+
+            <div class="filters">
+
+                <label for="studentSearch">Search Student</label>
+                <input type="search" id="studentSearch"
+                    placeholder="Search by name or ID">
+
+                <label for="semesterFilter">Semester</label>
+                <select id="semesterFilter">
+                    <option value="all">All Semesters</option>
+                    <option value="1">Semester 1</option>
+                    <option value="2">Semester 2</option>
+                </select>
+
+                <label for="statusFilter">Payment Status</label>
+                <select id="statusFilter">
+                    <option value="all">All Statuses</option>
+                    <option value="Paid">Paid</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Outstanding">Outstanding</option>
+                </select>
+
+                <button type="button" id="printLedger">
+                    Print Ledger
+                </button>
+
+            </div>
+
+            <div class="table-container">
+
+                <table id="ledgerTable">
+
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Student Name</th>
+                            <th>Semester</th>
+                            <th>Tuition</th>
+                            <th>Amount Paid</th>
+                            <th>Balance</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="ledgerBody">
+                        <!-- Records generated using JavaScript -->
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+        <!-- Transaction History -->
+        <section class="panel">
+
+            <h2>Transaction History</h2>
+
+            <div class="table-container">
+
+                <table id="transactionTable">
+
+                    <thead>
+                        <tr>
+                            <th>Transaction ID</th>
+                            <th>Student ID</th>
+                            <th>Semester</th>
+                            <th>Date</th>
+                            <th>Payment Method</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="transactionBody">
+                        <!-- Transactions generated using JavaScript -->
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Munro College | School Management Portal</p>
+    </footer>
+
+</body>
+
+</html>
