@@ -1,0 +1,243 @@
+:root {
+    --background: #160029;
+    --header: #2a2249;
+    --blue: #4055A0;
+    --gold: #F7D21B;
+    --white: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: var(--background);
+    color: var(--white);
+}
+
+/* Header and Navigation */
+header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: var(--header);
+}
+
+.logo {
+    width: 85px;
+}
+
+h1, h2 {
+    color: var(--gold);
+}
+
+header h1, header p {
+    margin: 5px;
+}
+
+nav {
+    background: var(--blue);
+}
+
+nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav a {
+    display: block;
+    padding: 15px 20px;
+    color: white;
+    text-decoration: none;
+}
+
+nav a:hover, nav a.active {
+    background: var(--background);
+    color: var(--gold);
+}
+
+/* Dashboard */
+main {
+    width: 90%;
+    max-width: 1400px;
+    margin: 30px auto;
+}
+
+.summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.summary-card, .panel {
+    background: var(--header);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.summary-card {
+    border-left: 4px solid var(--gold);
+}
+
+.summary-card p {
+    color: var(--gold);
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Forms and Filters */
+form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    align-items: center;
+}
+
+input, select, button {
+    padding: 10px;
+    border: 1px solid var(--blue);
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+input, select {
+    background: var(--background);
+    color: white;
+    width: 100%;
+}
+
+button {
+    background: var(--blue);
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background: var(--gold);
+    color: black;
+}
+
+form button {
+    grid-column: 1 / -1;
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.filters input, .filters select {
+    width: auto;
+}
+
+/* Tables */
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 650px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--blue);
+}
+
+th {
+    background: var(--blue);
+}
+
+/* Payment Statuses */
+.paid, .success {
+    color: lightgreen;
+}
+
+.pending {
+    color: var(--gold);
+}
+
+.outstanding, .error {
+    color: salmon;
+}
+
+.status {
+    font-weight: bold;
+}
+
+footer {
+    background: var(--header);
+    padding: 20px;
+    text-align: center;
+}
+
+/* Responsive Layout */
+@media (max-width: 1000px) {
+    .summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .summary, form {
+        grid-template-columns: 1fr;
+    }
+
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filters input, .filters select {
+        width: 100%;
+    }
+}
+
+/* Print Reports */
+@media print {
+    body, .panel, .summary-card {
+        background: white;
+        color: black;
+    }
+
+    header, nav, footer, form, button, .filters,
+    .panel:has(form) {
+        display: none;
+    }
+
+    h2, th, td, .summary-card p, .status {
+        color: black;
+        background: white;
+    }
+
+    main {
+        width: 100%;
+    }
+
+    table {
+        min-width: 0;
+    }
+
+    .table-container {
+        overflow: visible;
+    }
+}
