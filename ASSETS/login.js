@@ -1,3 +1,4 @@
+// Shamar Brown, 2501074.
 /* login.js, connects login form (id="Form") to auth.js */
 document.addEventListener("DOMContentLoaded", async () => {
   const form = document.getElementById("Form");
