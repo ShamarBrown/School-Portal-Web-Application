@@ -63,13 +63,15 @@ function render() {
       });
     }
     if (byId("filter").value && student.semester !== byId("filter").value) continue;
-    const cell = addRow(rows, [student.id, student.name, student.semester]).insertCell();
+    const cell = addRow(rows, [student.id, student.name, student.semester, student.classForm || "—", student.academicYear || "—"]).insertCell();
     action(cell, "Edit", () => {
       editingId = student.id;
       byId("studentId").value = student.id;
       byId("studentId").readOnly = true;
       byId("fullName").value = student.name;
-      byId("semester").value = student.semester;
+       byId("semester").value = student.semester;
+      byId("classForm").value = student.classForm ?? "";
+      byId("academicYear").value = student.academicYear ?? "";
       byId("formTitle").textContent = "Edit student";
       byId("cancel").hidden = false;
       byId("fullName").focus();
@@ -83,7 +85,7 @@ function render() {
     });
   }
   if (students.some(student => student.id === selected)) choices.value = selected;
-  if (!rows.rows.length) addRow(rows, ["No students in this view."]).cells[0].colSpan = 4;
+  if (!rows.rows.length) addRow(rows, ["No students in this view."]).cells[0].colSpan = 6;
   if (!grades.rows.length) addRow(grades, ["No grades recorded."]).cells[0].colSpan = 4;
 }
 byId("cancel").onclick = clearForm;
@@ -93,12 +95,23 @@ byId("registry").onsubmit = event => {
   const id = byId("studentId").value.trim().toUpperCase();
   const name = byId("fullName").value.trim();
   const semester = byId("semester").value;
+  const classForm = byId("classForm").value.trim();
+const academicYear = byId("academicYear").value.trim();
+
+if (!classForm) return notify("Enter the class or form.");
+
+const years = /^(\d{4})-(\d{4})$/.exec(academicYear);
+if (!years || Number(years[2]) !== Number(years[1]) + 1) {
+  return notify("Enter two consecutive years, such as 2026-2027.");
+}
   if (!/^[A-Z0-9][A-Z0-9_-]*$/.test(id)) return notify("Use letters, numbers, hyphens or underscores for the student ID.");
   if (!name) return notify("Enter a student ID and full name.");
   if (!editingId && students.some(student => student.id === id)) return notify("That student ID already exists.");
-  const next = editingId
-    ? students.map(student => student.id === editingId ? { ...student, name, semester } : student)
-    : [...students, { id, name, semester, grades: [] }];
+const next = editingId
+    ? students.map(student => student.id === editingId
+      ? { ...student, name, semester, classForm, academicYear }
+      : student)
+    : [...students, { id, name, semester, classForm, academicYear, grades: [] }];
   if (save(next)) {
     clearForm();
     notify("Student saved.");
