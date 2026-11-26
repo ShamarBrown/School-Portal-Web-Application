@@ -90,9 +90,13 @@ function logout() {
 
 function requireRole(allowedRoles) {
   const session = getSession();
-  if (!session || !allowedRoles.includes(session.role)) {
-    sessionStorage.removeItem(DBkeys.SESSION);
+  if (!session) {
     window.location.replace("index.html");
+    return false;
+  }
+  // Logged in but not allowed here: go to their own page, stay logged in
+  if (!allowedRoles.includes(session.role)) {
+    window.location.replace(Rolehomepages[session.role] || "index.html");
     return false;
   }
   return true;
