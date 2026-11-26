@@ -1,3 +1,3 @@
 # School-Portal-Web-Application
 
-We got thi
+We got this
