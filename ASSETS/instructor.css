@@ -1,3 +1,18 @@
+/*
+    CIT2011 - Web Programming
+    Munro College Student Portal
+
+    Group Members:
+    Jonique Walker - 2409374
+    Shamar Brown - 2501074
+    David Scott - 2507305
+    Rojaughn Murdock - 2505175
+    Damario Foster - 2507304
+
+    Lab Day: Thursday
+    Lab Time: 1:00 PM - 2:50 PM
+*/
+
 * {
     margin: 0;
     padding: 0;
@@ -136,7 +151,10 @@ button.secondary:hover { background: #172b4d; }
     font-weight: 700;
 }
 
-.table-scroll { width: 100%; overflow-x: auto; }
+.table-scroll {
+    width: 100%;
+    overflow-x: auto;
+}
 
 table {
     width: 100%;
@@ -160,7 +178,9 @@ th {
 tbody tr:nth-child(even) { background: #f8f8fc; }
 td input { min-width: 95px; width: 110px; }
 
-.report-section > label { max-width: 520px; }
+.report-section > label {
+    max-width: 520px;
+}
 
 .report-actions {
     display: flex;
@@ -183,13 +203,17 @@ td input { min-width: 95px; width: 110px; }
     border-bottom: 3px solid var(--gold);
 }
 
-.report-heading h2 { margin-bottom: 4px; }
+.report-heading h2 {
+    margin-bottom: 4px;
+}
+
 .report-details {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px 20px;
     margin-bottom: 18px;
 }
+
 .report-summary {
     margin-top: 15px;
     padding: 12px;
@@ -202,20 +226,33 @@ td input { min-width: 95px; width: 110px; }
     body { padding: 10px; }
     header { padding: 20px 12px; }
     section { padding: 16px; }
+
     .settings-grid, .metrics, .report-details {
         grid-template-columns: 1fr;
     }
+
     table { min-width: 720px; }
     .report-card table { min-width: 540px; }
 }
 
 @media print {
-    body { padding: 0; background: #fff; }
-    header, main > section:not(.report-section), .report-section > h2,
-    .report-section > label, .report-actions, #pageMessage {
+    body {
+        padding: 0;
+        background: #fff;
+    }
+
+    header, main > section:not(.report-section),
+    .report-section > h2,
+    .report-section > label,
+    .report-actions, #pageMessage {
         display: none !important;
     }
-    main { max-width: none; margin: 0; }
+
+    main {
+        max-width: none;
+        margin: 0;
+    }
+
     .report-section {
         display: block !important;
         margin: 0;
@@ -223,6 +260,7 @@ td input { min-width: 95px; width: 110px; }
         border: 0;
         box-shadow: none;
     }
+
     .report-card {
         display: block !important;
         margin: 0;
@@ -230,9 +268,21 @@ td input { min-width: 95px; width: 110px; }
         border: 0;
         color: #000;
     }
-    .report-card[hidden] { display: none !important; }
+
+    .report-card[hidden] {
+        display: none !important;
+    }
+
     .report-card table { min-width: 0; }
-    th { color: #000; background: #eee !important; }
+
+    th {
+        color: #000;
+        background: #eee !important;
+    }
+
     th, td { border: 1px solid #777; }
-    .report-summary { background: #f4f4f4 !important; }
+
+    .report-summary {
+        background: #f4f4f4 !important;
+    }
 }

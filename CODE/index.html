@@ -1,76 +1,85 @@
 <!DOCTYPE html>
-<!--Jonique Walker 2409374-->
+<!--
+Group Members:
+Jonique Walker (2409374)
+Shamar Brown (2501074)
+David Scott (2507305)
+Rojaughn Murdock (2505175)
+Damario Foster (2507304)
+Lab: Thursday, 1:00 PM - 2:50 PM
+-->
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale= 1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOME PAGE</title>
-     <link rel="stylesheet" href="../ASSETS/style.css">
-     <script src="../ASSETS/logic.js" defer></script>
+    <link rel="stylesheet" href="../ASSETS/style.css">
 </head>
-    <body>
-                
-        <header>
-            
-           <img src="../ASSETS/munroLogo.webp" alt="Logo" class="Logo"> 
-           
-           <h1 style="font-size:2.7vw">MUNRO COLLEGE STUDENT PORTAL</h1>
-        </header>
-        
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
-                </ul>
-            </nav>
-       
-            <main>
 
-           
-        <div class =centerAlign>
-         
-        <div class="yellowFont">
-        <h2 style="font-size:2.3vw">WELCOME TO THE MUNRO COLLEGE LOGIN PORTAL</h2>
-        <br>
-        <br>
-        <img src="../ASSETS/munroCampus.webp" alt="campus" class="campus">
-        </div>
-    
+<body>
 
-        <div class =whiteFont>
-            <h2 style="font-size:2.3vw">To sign in to the school portal please fill out the form below<br>
-             using the information provided in your email.</h2>
+    <header>
+        <img src="../ASSETS/munroLogo.webp" alt="Logo" class="Logo">
+        <h1 style="font-size:2.7vw">MUNRO COLLEGE STUDENT PORTAL</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="centerAlign">
+
+            <div class="yellowFont">
+                <h2 style="font-size:2.3vw">WELCOME TO THE MUNRO COLLEGE LOGIN PORTAL</h2>
+                <br>
+                <br>
+                <img src="../ASSETS/munroCampus.webp" alt="Munro College campus" class="campus">
+            </div>
+
+            <div class="whiteFont">
+                <h2 style="font-size:2.3vw">
+                    To sign in to the school portal please fill out the form below<br>
+                    using your registered name and email address.
+                </h2>
+            </div>
+
         </div>
-        </div>
-        
-            </main>
-             <div class="whiteFont">
+
+        <div class="whiteFont">
             <div class="centerAlign">
-            <form id = "Form" novalidate>
-                <h2> INSERT YOUR STUDENT LOGIN INFORMATION </h2>
-                <br>
-                <br>
-             
-                <label>NAME</label>
 
-                <input type="text" id="fullName" name="fullName" placeholder="Your Full Name">
-                 <small class ="error" id="nameError"> </small><br>
+                <form id="Form" novalidate>
+                    <h2>ENTER YOUR LOGIN INFORMATION</h2>
+                    <br>
+                    <br>
 
-                 <label>EMAIL</label>
-                 <input type="email" id="email" name="email" placeholder="Your Email">
-                 <small class = "error" id="emailError"></small>
-                <br>
-                <br>
-                 <button type="submit" class="buttonCSS">LOGIN</button>
-                 
-                 
-            </form>
-           </div>
-           </div>
-                 <script src="../ASSETS/"storage.js"></script>
-                 <script src="../ASSETS/"auth.js"></script>
-                 <script src="../ASSETS/"login.js"></script>
-    </body>
-    </html>
+                    <label for="fullName">NAME</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="Your Full Name">
+                    <small class="error" id="nameError"></small>
+                    <br>
+
+                    <label for="email">EMAIL</label>
+                    <input type="email" id="email" name="email" placeholder="Your Email">
+                    <small class="error" id="emailError"></small>
+                    <br>
+                    <br>
+
+                    <button type="submit" class="buttonCSS">LOGIN</button>
+                </form>
+
+            </div>
+        </div>
+    </main>
+
+    <script src="../ASSETS/storage.js"></script>
+    <script src="../ASSETS/auth.js"></script>
+    <script src="../ASSETS/login.js"></script>
+
+</body>
+</html>

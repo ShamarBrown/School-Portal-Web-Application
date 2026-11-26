@@ -1,99 +1,137 @@
 <!DOCTYPE html>
-<!--Jonique Walker 2409374-->
+<!--
+Group Members:
+Jonique Walker (2409374)
+Shamar Brown (2501074)
+David Scott (2507305)
+Rojaughn Murdock (2505175)
+Damario Foster (2507304)
+Lab: Thursday, 1:00 PM - 2:50 PM
+-->
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale= 1.0">
-    <title> CONTACT US </title>
-     <link rel="stylesheet" href="../ASSETS/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONTACT US</title>
+    <link rel="stylesheet" href="../ASSETS/style.css">
 </head>
-    <body>
-                
-        <header>
-            
-           <img src="../ASSETS/munroLogo.webp" alt="Logo" class="Logo"> 
-           
-           <h1 style="font-size:2.7vw">CONTACT US </h1>
-        </header>
-        
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
-                </ul>
-            </nav>
-             <main>
-            <div class="centerAlign">
-            <div class="whiteFont">
-             <br>
-             <h1 style="font-size:2.7vw">PHONE NUMBERS</h1>
-             <p>8765459345</p>
-             <br>
-             <h2 style="font-size:2.3vw">Principal's Office</h2>
-             <p>(876) 545-9345</p>
-             <br>
-             <h2 style="font-size:2.3vw">Bursar's Office</h2>
-             <p>(876) 545-8575 <br>
-                (876) 545-8577</p>
-             <br>
-            <h2 style="font-size:2.3vw">Vice Principal's Office</h2>
-            <p>(876) 545-9303</p>
-             <br>
-            <h2 style="font-size:2.3vw">Guidance Department</h2>
-            <p>(876) 337-1620</p>
-             <br>
-            <h1 style="font-size:2.7vw">EMAILS</h1>
-            <h2 style="font-size:2.3vw">General Email</h2>
-            <p>info@munrocollege.edu.jm</p>
-              <br>
-            <h1 style="font-size:2.7vw">Administration</h1>
-            <p>administration@munrocollege.edu.jm</p>
-            <br>
-            <h1>ADDRESS</h1>
-            <p>Potsdam, Munro College P.O., St. Elizabeth, Jamaica</p>
-            </div>
-            </div>
-  
-            <div class="whiteFont">
-            <div class="centerAlign">
-            <h1>CONTACT FORM</h1>
-            <h2 style="font-size:2.3vw">Fill out the form below to get in contact with us.</h2>
-            
-             <br>
-            <form id = "contactForm">
-            
-            <label>NAME</label>
-            <br>
-            <input type="text" id="fullName" name="fullName" placeholder="your Name">
-            
-            <small class="error" id="nameError"></small>
-            <br>
-             <label>EMAIL</label>
-             
-             <br>
-            <input type="email" id="email" name="email" placeholder="Your Email">
-             <br>
-             <small class="error" id="nameError"></small>
-             
-            <label for="subject">INQURY</label>
-            <br>
-            <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
-            <br>
-            <input type="submit" value="Submit">
-            </form>
-          
-            </div>
-            </div>
-              <script>
-    document.getElementById("contactForm").addEventListener("submit", function(event) {
-        event.preventDefault();
-        alert("Thank you for completing the inquiry form!");
-        this.reset();
-    });
-</script> 
-        </main>
 
-    </body>
-    </html>
+<body>
+
+    <header>
+        <img src="../ASSETS/munroLogo.webp" alt="Logo" class="Logo">
+        <h1 style="font-size:2.7vw">CONTACT US</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <main>
+
+        <div class="centerAlign">
+            <div class="whiteFont">
+                <br>
+
+                <h1 style="font-size:2.7vw">PHONE NUMBERS</h1>
+                <p>(876) 545-9345</p>
+                <br>
+
+                <h2 style="font-size:2.3vw">Principal's Office</h2>
+                <p>(876) 545-9345</p>
+                <br>
+
+                <h2 style="font-size:2.3vw">Bursar's Office</h2>
+                <p>
+                    (876) 545-8575<br>
+                    (876) 545-8577
+                </p>
+                <br>
+
+                <h2 style="font-size:2.3vw">Vice Principal's Office</h2>
+                <p>(876) 545-9303</p>
+                <br>
+
+                <h2 style="font-size:2.3vw">Guidance Department</h2>
+                <p>(876) 337-1620</p>
+                <br>
+
+                <h1 style="font-size:2.7vw">EMAILS</h1>
+
+                <h2 style="font-size:2.3vw">General Email</h2>
+                <p>info@munrocollege.edu.jm</p>
+                <br>
+
+                <h2 style="font-size:2.3vw">Administration</h2>
+                <p>administration@munrocollege.edu.jm</p>
+                <br>
+
+                <h1>ADDRESS</h1>
+                <p>Potsdam, Munro College P.O., St. Elizabeth, Jamaica</p>
+
+            </div>
+        </div>
+
+        <div class="whiteFont">
+            <div class="centerAlign">
+
+                <h1>CONTACT FORM</h1>
+
+                <h2 style="font-size:2.3vw">
+                    Fill out the form below to get in contact with us.
+                </h2>
+
+                <br>
+
+                <form id="contactForm">
+
+                    <label for="fullName">NAME</label>
+                    <br>
+
+                    <input type="text" id="fullName" name="fullName"
+                        placeholder="Your Name" required>
+
+                    <br>
+
+                    <label for="email">EMAIL</label>
+                    <br>
+
+                    <input type="email" id="email" name="email"
+                        placeholder="Your Email" required>
+
+                    <br>
+
+                    <label for="subject">INQUIRY</label>
+                    <br>
+
+                    <textarea id="subject" name="subject"
+                        placeholder="Write something.."
+                        style="height:200px" required></textarea>
+
+                    <br>
+
+                    <input type="submit" value="Submit">
+
+                </form>
+
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Display confirmation after successful form validation.
+        document.getElementById("contactForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            alert("Thank you for completing the inquiry form!");
+            this.reset();
+        });
+    </script>
+
+</body>
+</html>

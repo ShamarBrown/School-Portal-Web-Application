@@ -1,13 +1,13 @@
 # School-Portal-Web-Application
 
 Admin login : System Admin
-Passowrd: admin@munrocollege.edu.jm
+Email: admin@munrocollege.edu.jm
 
 Teacher login : Sample Teacher	
-Password : teacher@munrocollege.edu.jm
+Email: teacher@munrocollege.edu.jm
 
 Student Login : John Doe	
-Password : john.doe@example.com
+Email: john.doe@example.com
 
 1. Member 1: Demonstrate the public pages.
 2. Member 2: Log in as System Admin.

@@ -15,10 +15,10 @@
 /* login.js, connects login form (id="Form") to auth.js */
 document.addEventListener("DOMContentLoaded", async () => {
   const form = document.getElementById("Form");
-  if (!form) return;            // not the login page            
+  if (!form) return;            // not the login page
 
-  await initDatabase();            // seed defaults first       
- 
+  await initDatabase();            // seed defaults first
+
   // Already logged in you skip the form
   const existing = getSession();
   if (existing && Rolehomepages[existing.role]) {
@@ -28,12 +28,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const nameInput = document.getElementById("fullName");
   const emailInput = document.getElementById("email");
- 
+
   // The form has no general-error element, so it is created here
   const formError = makeErrorElement("formError", form.querySelector("button"), "beforebegin");
 
   form.addEventListener("submit", async (event) => {
-    event.preventDefault();                  // stop the page reloading 
+    event.preventDefault();                  // stop the page reloading
 
     const fullName = nameInput.value.trim();
     const email = emailInput.value.trim();
@@ -66,7 +66,7 @@ function setText(id, message) {
   const el = document.getElementById(id);
   if (el) el.textContent = message;
 }
-// Creates a small class="error" 
+// Creates a small class="error"
 // position is "beforebegin" or "afterend"
 function makeErrorElement(id, anchor, position) {
   let el = document.getElementById(id);

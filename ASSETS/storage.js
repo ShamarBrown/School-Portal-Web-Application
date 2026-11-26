@@ -14,14 +14,14 @@
 */
 /* storage.js, storage helpers and first-run seeding */
 const DBkeys = {
-  USERS: "mc-users",       //admin + teacher accounts     
-  STUDENTS: "mc-students",      
+  USERS: "mc-users",       //admin + teacher accounts
+  STUDENTS: "mc-students",
   TEACHERS: "mc-teachers",
   SUBJECTS: "mc-subjects",
   GRADES: "mc-grades",
   TRANSACTIONS: "mc-transactions",
-  SESSION: "mc-session",   //clears when tab closes   
-  LOCKOUT: "mc-lockout"         
+  SESSION: "mc-session",   //clears when tab closes
+  LOCKOUT: "mc-lockout"
 };
 
 // Default data used to seed the database

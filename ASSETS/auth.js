@@ -125,7 +125,7 @@ function guardPage(allowedRoles) {
   document.addEventListener("visibilitychange", () => {
     if (!document.hidden) requireRole(allowedRoles);
   });
- 
+
   // Add the logout button once the page has finished loading
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", setupLogoutButton);

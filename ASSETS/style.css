@@ -1,8 +1,21 @@
+/*
+    CIT2011 - Web Programming
+    Munro College Student Portal
 
+    Group Members:
+    Jonique Walker - 2409374
+    Shamar Brown - 2501074
+    David Scott - 2507305
+    Rojaughn Murdock - 2505175
+    Damario Foster - 2507304
+
+    Lab Day: Thursday
+    Lab Time: 1:00 PM - 2:50 PM
+*/
 :root {
     --background: #160029;
     --header: #2a2249;
-    --font: georgia serif #ffffff; 
+    --font: georgia serif #ffffff;
 }
 
 header {
@@ -28,7 +41,7 @@ div.whiteFont {
 }
 
 div.centerAlign {
-    text-align: center;  
+    text-align: center;
 }
 
 
@@ -70,7 +83,7 @@ body  {
 
   margin: 0;
   background:var(--background);
- 
+
    background-repeat: no-repeat;
   background-size: 1920px 1230px;
 
@@ -115,7 +128,7 @@ ul li a.active {
 
 .Logo{
    width: 120px;
-   
+
 }
 
 .frontSchool{
@@ -137,7 +150,7 @@ ul li a.active {
     background-color: #2a2249;
     padding: 25px;
     border-radius: 5px;
-   text-align: center; 
+   text-align: center;
 }
 
 #Form button {
@@ -159,12 +172,12 @@ ul li a.active {
 }
 
 input[type=text], select, textarea {
-  width: 50%; 
-  padding: 12px; 
-  border: 1px solid #ffffff; 
-  border-radius: 4px; 
-  box-sizing: border-box;  
-  margin-top: 6px; 
-  margin-bottom: 16px; 
+  width: 50%;
+  padding: 12px;
+  border: 1px solid #ffffff;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
   resize: vertical
 }

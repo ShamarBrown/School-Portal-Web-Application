@@ -1,7 +1,17 @@
+/*
+    CIT2011 - Web Programming
+    Munro College Student Portal
 
-// Damario Foster - 2507304
-// Add remaining group members and lab day/time
+    Group Members:
+    Jonique Walker - 2409374
+    Shamar Brown - 2501074
+    David Scott - 2507305
+    Rojaughn Murdock - 2505175
+    Damario Foster - 2507304
 
+    Lab Day: Thursday
+    Lab Time: 1:00 PM - 2:50 PM
+*/
 if (requireRole(["admin"])) {
     initializeFinance();
 }

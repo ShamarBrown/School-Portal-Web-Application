@@ -1,3 +1,17 @@
+/*
+    CIT2011 - Web Programming
+    Munro College Student Portal
+
+    Group Members:
+    Jonique Walker - 2409374
+    Shamar Brown - 2501074
+    David Scott - 2507305
+    Rojaughn Murdock - 2505175
+    Damario Foster - 2507304
+
+    Lab Day: Thursday
+    Lab Time: 1:00 PM - 2:50 PM
+*/
 "use strict";
 
 // Existing shared database helpers are provided by storage.js and auth.js.
@@ -264,15 +278,21 @@ function renderStudentEntryTable() {
     const body = byId("studentEntryTable");
     body.replaceChildren();
 
-    if (!registeredStudents.length) {
+    const period = selectedPeriod();
+    const filteredStudents = registeredStudents.filter(student =>
+        student.semester === period.semester &&
+        student.academicYear === period.academicYear
+    );
+
+    if (!filteredStudents.length) {
         const row = body.insertRow();
         const cell = row.insertCell();
         cell.colSpan = 4;
-        cell.textContent = "No registered students were found.";
+        cell.textContent = "No registered students found for the selected semester and academic year.";
         return;
     }
 
-    registeredStudents.forEach(student => {
+    filteredStudents.forEach(student => {
         const row = body.insertRow();
         row.insertCell().textContent = student.studentId;
         row.insertCell().textContent = student.fullName;
@@ -552,8 +572,14 @@ function initializeInstructor() {
 
     byId("gradeForm").addEventListener("submit", saveBatchGrades);
     byId("subjectSelect").addEventListener("change", refreshDashboard);
-    byId("semesterSelect").addEventListener("change", refreshDashboard);
-    byId("academicYear").addEventListener("input", refreshDashboard);
+    byId("semesterSelect").addEventListener("change", () => {
+        renderStudentEntryTable();
+        refreshDashboard();
+    });
+    byId("academicYear").addEventListener("input", () => {
+        renderStudentEntryTable();
+        refreshDashboard();
+    });
     byId("generateReport").addEventListener("click", generateReportCard);
     byId("printReport").addEventListener("click", () => {
         if (!byId("reportCard").hidden) window.print();
@@ -562,6 +588,7 @@ function initializeInstructor() {
     // Suggest the academic year already recorded for the first registered student.
     const year = registeredStudents.find(student => validAcademicYear(student.academicYear));
     if (year) byId("academicYear").value = year.academicYear;
+    renderStudentEntryTable();
     refreshDashboard();
 }
 
