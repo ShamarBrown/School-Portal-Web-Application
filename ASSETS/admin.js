@@ -16,13 +16,69 @@ let editingId = null;
 function notify(message) {
   byId("message").textContent = message;
 }
+function gradeKey(grade) {
+  return JSON.stringify([
+    String(grade.studentId),
+    grade.subject.trim().toLowerCase(),
+    String(grade.semester ?? "").replace(/^Semester\s*/i, ""),
+    grade.academicYear ?? ""
+  ]);
+}
+
+function splitRecords(records) {
+  const profiles = [];
+  const grades = [];
+
+  for (const { id, name, grades: studentGrades = [], ...profile } of records) {
+    profiles.push({
+      ...profile,
+      studentId: id,
+      fullName: name,
+      email: profile.email ?? "",
+      classForm: profile.classForm ?? profile.grade ?? "",
+      semester: profile.semester ?? "",
+      academicYear: profile.academicYear ?? ""
+    });
+
+    for (const grade of studentGrades) {
+      grades.push({
+        ...grade,
+        studentId: id,
+        studentName: name,
+        semester: String(grade.semester ?? profile.semester ?? "")
+          .replace(/^Semester\s*/i, ""),
+        academicYear: grade.academicYear ?? profile.academicYear ?? "",
+        average: grade.score ?? grade.average
+      });
+    }
+  }
+
+  return { profiles, grades };
+}
+
 function save(next) {
-  try {
-    localStorage.setItem(storageKey, JSON.stringify(next));
-  } catch {
-    notify("Unable to save. Check browser storage permissions.");
+  const { profiles, grades } = splitRecords(next);
+  const previousProfiles = dbGet(DBkeys.STUDENTS);
+  const knownIds = new Set(students.map(student => String(student.id)));
+
+  // Keep shared grades for students outside the admin list.
+  const otherGrades = dbGet(DBkeys.GRADES).filter(
+    grade => !knownIds.has(String(grade.studentId))
+  );
+
+  if (!dbSet(DBkeys.STUDENTS, profiles)) {
+    notify("Could not save student records.");
     return false;
   }
+
+  if (!dbSet(DBkeys.GRADES, [...otherGrades, ...grades])) {
+    const restored = dbSet(DBkeys.STUDENTS, previousProfiles);
+    notify(restored
+      ? "Could not save grades. The student change was undone."
+      : "Could not save grades or restore student records. Reload before editing.");
+    return false;
+  }
+
   students = next;
   render();
   return true;
@@ -172,8 +228,51 @@ byId("gradeForm").onsubmit = event => {
   }
 };
 try {
-  const stored = localStorage.getItem(storageKey);
-  students = stored === null ? [] : JSON.parse(stored);
+   let profiles = dbGet(DBkeys.STUDENTS);
+  let grades = dbGet(DBkeys.GRADES);
+  const legacyData = localStorage.getItem(storageKey);
+
+  if (legacyData !== null) {
+    const legacy = splitRecords(JSON.parse(legacyData));
+
+    const profilesById = new Map(
+      profiles.map(profile => [String(profile.studentId), profile])
+    );
+    for (const profile of legacy.profiles) {
+      const id = String(profile.studentId);
+      profilesById.set(id, { ...profile, ...profilesById.get(id) });
+    }
+
+    const gradesByKey = new Map(grades.map(grade => [gradeKey(grade), grade]));
+    for (const grade of legacy.grades) {
+      const key = gradeKey(grade);
+      if (!gradesByKey.has(key)) gradesByKey.set(key, grade);
+    }
+
+    profiles = [...profilesById.values()];
+    grades = [...gradesByKey.values()];
+
+    if (!dbSet(`${storageKey}.backup`, JSON.parse(legacyData))
+        || !dbSet(DBkeys.STUDENTS, profiles)
+        || !dbSet(DBkeys.GRADES, grades)) {
+      throw new Error("The shared records could not be saved.");
+    }
+
+    // Retire the old key only after the backup and both writes succeed.
+    localStorage.removeItem(storageKey);
+  }
+
+  students = profiles.map(({ studentId, fullName, ...profile }) => ({
+    ...profile,
+    id: String(studentId),
+    name: fullName,
+    semester: /^[12]$/.test(String(profile.semester))
+      ? `Semester ${profile.semester}` : profile.semester ?? "",
+    grades: grades
+      .filter(grade => String(grade.studentId) === String(studentId))
+      .map(grade => ({ ...grade, score: grade.score ?? grade.average }))
+  }));
+
   render();
 } catch {
   document.querySelectorAll("input, select, button").forEach(control => control.disabled = true);
