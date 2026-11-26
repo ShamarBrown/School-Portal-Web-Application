@@ -1,4 +1,4 @@
-// Shamar Brown, 2501074.
+// Shamar Brown, 2501074, Jonique Walker 2409374, David Scott 2507305, Rojaughn Murdock 2505175, Damario 2507304
 /* login.js, connects login form (id="Form") to auth.js */
 document.addEventListener("DOMContentLoaded", async () => {
   const form = document.getElementById("Form");
