@@ -102,6 +102,23 @@ function guardPage(allowedRoles) {
   requireRole(allowedRoles);
   window.addEventListener("pageshow", () => requireRole(allowedRoles));
 
-  const logoutBtn = document.getElementById("logoutBtn");
-  if (logoutBtn) logoutBtn.addEventListener("click", logout);
+  // Add the logout button once the page has finished loading
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupLogoutButton);
+  } else {
+    setupLogoutButton();
+  }
+}
+
+// Uses the page's own #logoutBtn if it has one, otherwise adds a button to the header
+function setupLogoutButton() {
+  let logoutBtn = document.getElementById("logoutBtn");
+  if (!logoutBtn) {
+    logoutBtn = document.createElement("button");
+    logoutBtn.id = "logoutBtn";
+    logoutBtn.type = "button";
+    logoutBtn.textContent = "Log out";
+    (document.querySelector("header") || document.body).appendChild(logoutBtn);
+  }
+  logoutBtn.addEventListener("click", logout);
 }
