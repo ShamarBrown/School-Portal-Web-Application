@@ -1,0 +1,167 @@
+:root {
+    --background: #160029;
+    --header: #2a2249;
+    --font: georgia serif #ffffff; 
+}
+
+header {
+       background-color: var(--header);
+       padding:10px;
+       color: #2a2249;
+
+}
+
+h1 {
+    margin:0;
+    color:#F7D21B
+}
+
+
+
+div.background{
+      background-color: #160029;
+}
+
+div.whiteFont {
+      color :#fff
+}
+
+div.centerAlign {
+    text-align: center;  
+}
+
+
+div.yellowFont{
+    color:#F7D21B
+}
+
+
+
+
+
+
+
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 33.33%;
+  padding: 5px;
+}
+
+
+
+
+body  {
+
+  margin: 0;
+  background:var(--background);
+ 
+   background-repeat: no-repeat;
+  background-size: 1920px 1230px;
+
+
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: var(--background);
+}
+
+
+ul li {
+  float: left;
+}
+h2, p {
+  margin: 10px;
+}
+
+ul li a {
+  display: flex;
+  color: #fbf9fc;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+ul li a:hover:not(.active) {
+  background-color: #332253;
+}
+
+ul li a.active {
+  background-color: #160029;
+}
+
+
+
+.Logo{
+   width: 120px;
+   
+}
+
+.frontSchool{
+   width:50%;
+   height: auto;
+}
+
+.campus{
+  width: 50%;
+  height: 60%;
+}
+
+.jump{
+  width:60%;
+  height:auto;
+}
+
+#Form {
+    background-color: #47488b;
+    padding: 25px;
+    border-radius: 5px;
+   text-align: center; 
+}
+
+#Form button {
+    width: 80%;
+    padding: 15px;
+    background-color:#313677;
+    color: #160029;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+@media only screen and (min-width: 1200px) {}
+
+@media (min-width: 600px) {
+  .header {grid-area: 1 / span 6;}
+}
+
+input[type=text], select, textarea {
+  width: 50%; 
+  padding: 12px; 
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+  box-sizing: border-box;  
+  margin-top: 6px; 
+  margin-bottom: 16px; 
+  resize: vertical
+}
