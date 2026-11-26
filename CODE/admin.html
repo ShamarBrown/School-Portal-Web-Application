@@ -1,3 +1,12 @@
+<!--
+Group members
+David Scott (2507305)
+Shamar Brown (2501074)
+Damario Foster (2507304)
+Jonique Walker (2409374)
+Rojaughn Murdock(2505175)
+Lab: Thursday at 1:00 p.m.
+-->
 <!doctype html>
 <!-- David Scott, 2507305. Add all group members and lab times before submission. -->
 <html lang="en">
@@ -69,7 +78,19 @@
             <h2>Subject grades</h2>
             <form id="gradeForm"><label>Student<select id="gradeStudent" required></select></label><label>Subject<input
                         id="subject" required maxlength="60"></label><label>Grade (%)<input id="score" type="number"
-                        required min="0" max="100" step="0.1"></label><button>Save grade</button></form>
+                        required min="0" max="100" step="0.1"></label>
+                        <label>Semester
+    <select id="gradeSemester" required>
+        <option value="">Choose a semester</option>
+        <option value="1">Semester 1</option>
+        <option value="2">Semester 2</option>
+    </select>
+</label>
+<label>Academic year
+    <input id="gradeAcademicYear" required pattern="[0-9]{4}-[0-9]{4}"
+           maxlength="9" placeholder="e.g. 2026-2027">
+</label>
+                        <button>Save grade</button></form>
             <details>
                 <summary>Upload grades from a CSV file</summary>
                 <p>Use the header <code>studentId,subject,score</code> and one grade per line. Use existing student IDs
@@ -84,6 +105,8 @@
                             <th>Student ID</th>
                             <th>Subject</th>
                             <th>Grade (%)</th>
+                            <th scope="col">Semester</th>
+<th scope="col">Academic year</th>
                             <th>Actions</th>
                         </tr>
                     </thead>

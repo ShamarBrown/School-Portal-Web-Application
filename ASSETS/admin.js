@@ -1,4 +1,12 @@
-// David Scott, 2507305. Group names and lab times pending.
+/*
+Group members
+David Scott (2507305)
+Shamar Brown (2501074)
+Damario Foster (2507304)
+Jonique Walker (2409374)
+Rojaughn Murdock(2505175)
+Lab: Thursday at 1:00 p.m.
+*/
 "use strict";
 const byId = id => document.getElementById(id);
 // The registry and grade table share one browser storage record.
@@ -48,11 +56,19 @@ function render() {
   for (const student of students) {
     choices.add(new Option(student.name + " (" + student.id + ")", student.id));
     for (const grade of student.grades) {
-      const cell = addRow(grades, [student.id, grade.subject, grade.score]).insertCell();
+      const cell = addRow(grades, [
+        student.id,
+        grade.subject,
+        grade.score,
+        grade.semester || "—",
+        grade.academicYear || "—"
+      ]).insertCell();
       action(cell, "Edit grade", () => {
         choices.value = student.id;
         byId("subject").value = grade.subject;
         byId("score").value = grade.score;
+        byId("gradeSemester").value = String(grade.semester ?? "").replace(/^Semester\s+/i, "");
+byId("gradeAcademicYear").value = grade.academicYear ?? "";
         byId("score").focus();
       });
       action(cell, "Delete grade", () => {
@@ -95,7 +111,7 @@ if (yearFilter && student.academicYear !== yearFilter) continue;
   }
   if (students.some(student => student.id === selected)) choices.value = selected;
   if (!rows.rows.length) addRow(rows, ["No students in this view."]).cells[0].colSpan = 6;
-  if (!grades.rows.length) addRow(grades, ["No grades recorded."]).cells[0].colSpan = 4;
+  if (!grades.rows.length) addRow(grades, ["No grades recorded."]).cells[0].colSpan = 6;
 }
 byId("cancel").onclick = clearForm;
 byId("filter").onchange = render;
@@ -141,7 +157,15 @@ byId("gradeForm").onsubmit = event => {
   const subject = byId("subject").value.trim();
   const score = byId("score").valueAsNumber;
   if (!subject) return notify("Enter a subject.");
-  const next = setGrade(students, id, subject, score);
+ const semester = byId("gradeSemester").value;
+  const academicYear = byId("gradeAcademicYear").value.trim();
+  const years = /^(\d{4})-(\d{4})$/.exec(academicYear);
+
+  if (!years || Number(years[2]) !== Number(years[1]) + 1) {
+    return notify("Enter two consecutive years, such as 2026-2027.");
+  }
+
+  const next = setGrade(students, id, subject, score, semester, academicYear);
   if (save(next)) {
     byId("gradeForm").reset();
     notify("Grade saved.");
@@ -156,11 +180,27 @@ try {
   notify("Unable to load student records. Check browser storage before editing.");
 }
 
-function setGrade(records, id, subject, score) {
+function setGrade(records, id, subject, score, semester, academicYear) {
   return records.map(student => {
     if (student.id !== id) return student;
-    const grades = student.grades.filter(entry => entry.subject.toLowerCase() !== subject.toLowerCase());
-    return { ...student, grades: [...grades, { subject, score }] };
+
+    const term = String(semester ?? student.semester ?? "")
+      .replace(/^Semester\s+/i, "");
+    const year = academicYear ?? student.academicYear ?? "";
+
+    const grades = student.grades.filter(entry => {
+      const entryTerm = String(entry.semester ?? student.semester ?? "")
+        .replace(/^Semester\s+/i, "");
+      const entryYear = entry.academicYear ?? student.academicYear ?? "";
+
+      return !(entry.subject.toLowerCase() === subject.toLowerCase()
+        && entryTerm === term && entryYear === year);
+    });
+
+    return {
+      ...student,
+      grades: [...grades, { subject, score, semester: term, academicYear: year }]
+    };
   });
 }
 

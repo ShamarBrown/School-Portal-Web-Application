@@ -1,4 +1,12 @@
-/* David Scott, 2507305. Group names and lab times pending. */
+/*
+Group members
+David Scott (2507305)
+Shamar Brown (2501074)
+Damario Foster (2507304)
+Jonique Walker (2409374)
+Rojaughn Murdock(2505175)
+Lab: Thursday at 1:00 p.m.
+*/
 * { box-sizing: border-box; }
 body { margin: 0; color: #192f38; background: #f3f6f5; font: 1rem/1.5 system-ui, sans-serif; }
 header { background: #163f42; color: white; padding: 1rem 5vw; font-weight: 700; }
@@ -19,3 +27,41 @@ th, td { padding: .65rem; text-align: left; border-bottom: 1px solid #dce4e2; }
 th { background: #edf4f1; }
 #message:not(:empty) { position: sticky; bottom: .7rem; background: #173e40; color: white; padding: .7rem 1rem; }
 @media (max-width: 600px) { form, form label { display: grid; width: 100%; } section { padding: 1rem; } }
+body {
+  background: #f4f2fa;
+  color: #2a2249;
+}
+
+header {
+  background: #2a2249;
+  border-bottom: 4px solid #f7d21b;
+}
+
+header span {
+  color: #f7d21b;
+}
+
+nav {
+  background: #160029;
+  padding: .65rem 5vw;
+}
+
+nav a {
+  color: #f7d21b;
+  margin-right: 1rem;
+}
+
+button,
+#message:not(:empty) {
+  background: #4055a0;
+}
+
+.secondary,
+td button {
+  background: white;
+  color: #4055a0;
+}
+
+th {
+  background: #e9e6f6;
+}
