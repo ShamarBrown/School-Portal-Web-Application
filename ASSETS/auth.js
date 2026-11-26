@@ -1,9 +1,22 @@
-// Shamar Brown, 2501074, Jonique Walker 2409374, David Scott 2507305, Rojaughn Murdock 2505175, Damario 2507304
+/*
+    CIT2011 - Web Programming
+    Munro College Student Portal
+
+    Group Members:
+    Jonique Walker - 2409374
+    Shamar Brown - 2501074
+    David Scott - 2507305
+    Rojaughn Murdock - 2505175
+    Damario Foster - 2507304
+
+    Lab Day: Thursday
+    Lab Time: 1:00 PM - 2:50 PM
+*/
 //auth.js, login, session, lockout, role guard
 const Session_Minutes = 30;
 const Max_attempts = 3;
 const lockout_seconds = 30;
-const Expiry_checks_seconds = 10; //How often the page rechecks the session
+const Expiry_check_seconds = 10; //How often the page rechecks the session
 
 const Rolehomepages = {
   admin: "admin.html",
