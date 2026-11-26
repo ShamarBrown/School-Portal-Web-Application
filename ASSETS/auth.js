@@ -6,8 +6,8 @@ const lockout_seconds = 30;
 
 const Rolehomepages = {
   admin: "admin.html",
-  teacher: "teacher-dashboard.html",
-  student: "student-dashboard.html"
+  teacher: "instructor.html",
+  student: "reports.html"
 };
 //lockout code
 function getLockoutremaining() {
