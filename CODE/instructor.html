@@ -1,117 +1,153 @@
-<!--Rojaughn Murdock 2505175-->
+<!-- Rojaughn Murdock 2505175 -->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Instructor Dashboard</title>
-
-    <link rel="stylesheet" href="../ASSETS/instructor.css">
+    <link rel="stylesheet" href="instructor.css">
 </head>
-
 <body>
-
     <header>
         <h1>Instructor Dashboard</h1>
         <p>Manage student grades and academic performance</p>
     </header>
 
     <main>
-
-        <!-- Subject Selection -->
         <section class="subject-section">
-
-            <h2>Select Subject</h2>
-
-            <label for="subjectSelect">Subject:</label>
-
-            <select id="subjectSelect">
-                <option value="">-- Select Subject --</option>
-                <option value="Programming">Programming</option>
-                <option value="Mathematics">Mathematics</option>
-                <option value="Computer Networks">Computer Networks</option>
-            </select>
-
+            <h2>Grade Settings</h2>
+            <div class="settings-grid">
+                <label for="subjectSelect">Assigned subject
+                    <select id="subjectSelect" required>
+                        <option value="">Loading assigned subjects...</option>
+                    </select>
+                </label>
+                <label for="semesterSelect">Semester
+                    <select id="semesterSelect" required>
+                        <option value="1">Semester 1</option>
+                        <option value="2">Semester 2</option>
+                    </select>
+                </label>
+                <label for="academicYear">Academic year
+                    <input type="text" id="academicYear" placeholder="2026-2027"
+                           pattern="[0-9]{4}-[0-9]{4}" maxlength="9" required>
+                </label>
+            </div>
+            <p id="subjectMessage" class="message" role="status"></p>
         </section>
 
-        <!-- Grade Entry -->
         <section class="grade-section">
-
-            <h2>Student Grade Entry</h2>
-
+            <h2>Batch Grade Entry</h2>
+            <p class="section-help">Enter coursework and exam marks for each student. Leave both fields blank to skip a student.</p>
             <form id="gradeForm">
-
-                <label for="studentName">Student Name:</label>
-                <input type="text" id="studentName" required>
-
-                <label for="studentId">Student ID:</label>
-                <input type="text" id="studentId" required>
-
-                <label for="coursework">Coursework Grade:</label>
-                <input type="number" id="coursework" min="0" max="100" required>
-
-                <label for="exam">Exam Grade:</label>
-                <input type="number" id="exam" min="0" max="100" required>
-
-                <button type="submit">Submit Grade</button>
-
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Student ID</th>
+                                <th scope="col">Student Name</th>
+                                <th scope="col">Coursework (0–100)</th>
+                                <th scope="col">Exam (0–100)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentEntryTable">
+                            <tr><td colspan="4">Loading registered students...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button type="submit" id="saveGradesBtn">Save Batch Grades</button>
             </form>
-
+            <p id="gradeMessage" class="message" role="status" aria-live="polite"></p>
         </section>
 
-        <!-- Academic Metrics -->
         <section class="metrics-section">
-
             <h2>Academic Performance</h2>
-
             <div class="metrics">
-
                 <div class="metric-card">
-                    <h3>Total Students</h3>
+                    <h3>Students with Grades</h3>
                     <p id="totalStudents">0</p>
                 </div>
-
                 <div class="metric-card">
                     <h3>Class Average</h3>
                     <p id="classAverage">0%</p>
                 </div>
-
+                <div class="metric-card">
+                    <h3>Pass Rate</h3>
+                    <p id="passRate">0%</p>
+                </div>
             </div>
-
         </section>
 
-        <!-- Grade Records -->
         <section class="records-section">
-
             <h2>Student Grade Records</h2>
-
-            <table>
-
-                <thead>
-                    <tr>
-                        <th>Student Name</th>
-                        <th>Student ID</th>
-                        <th>Coursework</th>
-                        <th>Exam</th>
-                        <th>Average</th>
-                        <th>Grade</th>
-                    </tr>
-                </thead>
-
-                <tbody id="gradeTable">
-                </tbody>
-
-            </table>
-
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Student Name</th>
+                            <th scope="col">Student ID</th>
+                            <th scope="col">Coursework</th>
+                            <th scope="col">Exam</th>
+                            <th scope="col">Average</th>
+                            <th scope="col">Grade</th>
+                            <th scope="col">Semester</th>
+                            <th scope="col">Academic Year</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gradeTable">
+                        <tr><td colspan="8">No grade records to display.</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </section>
 
+        <section class="report-section">
+            <h2>Individual Report Card</h2>
+            <label for="reportStudent">Select student
+                <select id="reportStudent">
+                    <option value="">Choose a registered student</option>
+                </select>
+            </label>
+            <div class="report-actions">
+                <button type="button" id="generateReport">Generate Report Card</button>
+                <button type="button" id="printReport" class="secondary" disabled>Print Report Card</button>
+            </div>
+            <div id="reportCard" class="report-card" hidden>
+                <div class="report-heading">
+                    <h2>Student Academic Report</h2>
+                    <p>School Portal</p>
+                </div>
+                <div class="report-details">
+                    <p><strong>Student:</strong> <span id="reportName"></span></p>
+                    <p><strong>Student ID:</strong> <span id="reportId"></span></p>
+                    <p><strong>Class/Form:</strong> <span id="reportClass"></span></p>
+                    <p><strong>Semester:</strong> <span id="reportSemester"></span></p>
+                    <p><strong>Academic Year:</strong> <span id="reportYear"></span></p>
+                </div>
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Coursework</th>
+                                <th>Exam</th>
+                                <th>Average</th>
+                                <th>Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reportGrades"></tbody>
+                    </table>
+                </div>
+                <p id="reportSummary" class="report-summary"></p>
+            </div>
+        </section>
+        <p id="pageMessage" class="message" role="status" aria-live="polite"></p>
     </main>
 
-    <script src="../ASSETS/instructor.js"></script>
+    <!-- These are the existing shared portal scripts; do not edit them. -->
     <script src="../ASSETS/storage.js"></script>
     <script src="../ASSETS/auth.js"></script>
     <script>guardPage(["teacher"]);</script>
+    <script src="instructor.js"></script>
 </body>
 </html>
