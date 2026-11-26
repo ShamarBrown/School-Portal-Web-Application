@@ -23,7 +23,7 @@ div.background{
 }
 
 div.whiteFont {
-      color :#fff
+      color :#ffffff
 }
 
 div.centerAlign {
@@ -103,7 +103,7 @@ ul li a {
 }
 
 ul li a:hover:not(.active) {
-  background-color: #332253;
+  background-color: #2a2249;
 }
 
 ul li a.active {
@@ -133,7 +133,7 @@ ul li a.active {
 }
 
 #Form {
-    background-color: #47488b;
+    background-color: #2a2249;
     padding: 25px;
     border-radius: 5px;
    text-align: center; 
@@ -142,8 +142,8 @@ ul li a.active {
 #Form button {
     width: 80%;
     padding: 15px;
-    background-color:#313677;
-    color: #160029;
+    background-color:#2a2249;
+    color: #ffffff;
     border-radius: 5px;
     font-size: 16px;
     font-weight: bold;
@@ -158,7 +158,7 @@ ul li a.active {
 input[type=text], select, textarea {
   width: 50%; 
   padding: 12px; 
-  border: 1px solid #ccc; 
+  border: 1px solid #ffffff; 
   border-radius: 4px; 
   box-sizing: border-box;  
   margin-top: 6px; 

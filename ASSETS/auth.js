@@ -1,8 +1,22 @@
-// Shamar Brown, 2501074.
+/*
+    CIT2011 - Web Programming
+    Munro College Student Portal
+
+    Group Members:
+    Jonique Walker - 2409374
+    Shamar Brown - 2501074
+    David Scott - 2507305
+    Rojaughn Murdock - 2505175
+    Damario Foster - 2507304
+
+    Lab Day: Thursday
+    Lab Time: 1:00 PM - 2:50 PM
+*/
 //auth.js, login, session, lockout, role guard
 const Session_Minutes = 30;
 const Max_attempts = 3;
 const lockout_seconds = 30;
+const Expiry_check_seconds = 10; //How often the page rechecks the session
 
 const Rolehomepages = {
   admin: "admin.html",
@@ -105,7 +119,13 @@ function requireRole(allowedRoles) {
 function guardPage(allowedRoles) {
   requireRole(allowedRoles);
   window.addEventListener("pageshow", () => requireRole(allowedRoles));
-
+// A page left open can outlive its session so recheck every few seconds
+  setInterval(() => requireRole(allowedRoles), Expiry_check_seconds * 1000);
+  // It also checks when the user returns to the tab
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) requireRole(allowedRoles);
+  });
+ 
   // Add the logout button once the page has finished loading
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", setupLogoutButton);
