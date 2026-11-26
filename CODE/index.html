@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale= 1.0">
     <title>HOME PAGE</title>
      <link rel="stylesheet" href="../ASSETS/style.css">
+     <script src="../ASSETS/logic.js" defer></script>
 </head>
     <body>
                 
@@ -40,8 +41,7 @@
 
         <div class =whiteFont>
             <h2 style="font-size:2.3vw">To sign in to the school portal please fill out the form below<br>
-             using the information provided in your email.If you are a teacher/adminstrator<br>
-            please use the correct login portal</h2>
+             using the information provided in your email.</h2>
         </div>
         </div>
         
@@ -49,27 +49,28 @@
              <div class="whiteFont">
             <div class="centerAlign">
             <form id = "Form" novalidate>
-                <label> INSERT YOUR STUDENT LOGIN INFORMATION </label>
+                <h2> INSERT YOUR STUDENT LOGIN INFORMATION </h2>
                 <br>
                 <br>
              
                 <label>NAME</label>
 
                 <input type="text" id="fullName" name="fullName" placeholder="Your Full Name">
-                 <small class ="error" id="nameError"> </small>
+                 <small class ="error" id="nameError"> </small><br>
 
                  <label>EMAIL</label>
                  <input type="email" id="email" name="email" placeholder="Your Email">
                  <small class = "error" id="emailError"></small>
                 <br>
                 <br>
+                 <button type="submit" class="buttonCSS">LOGIN</button>
                  
-                 <button type="submit">LOGIN</button>
+                 
             </form>
            </div>
            </div>
-        <script src="../ASSETS/storage.js"></script>
-        <script src="../ASSETS/auth.js"></script>
-        <script src="../ASSETS/login.js"></script>
+                 <script src="../ASSETS/"storage.js"></script>
+                 <script src="../ASSETS/"auth.js"></script>
+                 <script src="../ASSETS/"login.js"></script>
     </body>
     </html>

@@ -62,7 +62,7 @@
             <h2 style="font-size:2.3vw">Fill out the form below to get in contact with us.</h2>
             
              <br>
-            <form id = "contactForm" novalidate>
+            <form id = "contactForm">
             
             <label>NAME</label>
             <br>
@@ -86,7 +86,13 @@
           
             </div>
             </div>
-        
+              <script>
+    document.getElementById("contactForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        alert("Thank you for completing the inquiry form!");
+        this.reset();
+    });
+</script> 
         </main>
 
     </body>
