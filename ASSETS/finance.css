@@ -1,3 +1,7 @@
+
+/* Damario Foster - 2507304 */
+/* Add remaining group members and lab day/time */
+
 :root {
     --background: #160029;
     --header: #2a2249;
@@ -8,6 +12,10 @@
 
 * {
     box-sizing: border-box;
+}
+
+[hidden] {
+    display: none !important;
 }
 
 body {
@@ -28,6 +36,7 @@ header {
 
 .logo {
     width: 85px;
+    height: auto;
 }
 
 h1, h2 {
@@ -36,6 +45,10 @@ h1, h2 {
 
 header h1, header p {
     margin: 5px;
+}
+
+#logoutBtn {
+    margin-left: auto;
 }
 
 nav {
@@ -91,6 +104,7 @@ main {
     color: var(--gold);
     font-size: 24px;
     font-weight: bold;
+    overflow-wrap: anywhere;
 }
 
 /* Forms and Filters */
@@ -112,6 +126,7 @@ input, select {
     background: var(--background);
     color: white;
     width: 100%;
+    min-width: 0;
 }
 
 button {
@@ -123,6 +138,11 @@ button {
 button:hover {
     background: var(--gold);
     color: black;
+}
+
+input:focus, select:focus, button:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
 }
 
 form button {
@@ -139,6 +159,7 @@ form button {
 
 .filters input, .filters select {
     width: auto;
+    max-width: 100%;
 }
 
 /* Tables */
@@ -160,6 +181,10 @@ th, td {
 
 th {
     background: var(--blue);
+}
+
+tbody tr:hover {
+    background: rgba(255, 255, 255, 0.04);
 }
 
 /* Payment Statuses */
@@ -187,12 +212,15 @@ footer {
 
 /* Responsive Layout */
 @media (max-width: 1000px) {
+
     .summary {
         grid-template-columns: repeat(2, 1fr);
     }
+
 }
 
 @media (max-width: 600px) {
+
     .summary, form {
         grid-template-columns: 1fr;
     }
@@ -200,6 +228,10 @@ footer {
     header {
         flex-direction: column;
         text-align: center;
+    }
+
+    #logoutBtn {
+        margin-left: 0;
     }
 
     .filters {
@@ -210,34 +242,67 @@ footer {
     .filters input, .filters select {
         width: 100%;
     }
+
+    .panel {
+        padding: 15px;
+    }
+
+    nav ul {
+        flex-direction: column;
+    }
+
 }
 
 /* Print Reports */
 @media print {
+
     body, .panel, .summary-card {
         background: white;
         color: black;
     }
 
-    header, nav, footer, form, button, .filters,
+    nav, footer, form, button, .filters,
     .panel:has(form) {
         display: none;
     }
 
-    h2, th, td, .summary-card p, .status {
+    header {
+        background: white;
+        color: black;
+        padding: 0;
+    }
+
+    header h1, h2, th, td,
+    .summary-card p, .status {
         color: black;
         background: white;
     }
 
     main {
         width: 100%;
+        margin: 0;
     }
 
     table {
         min-width: 0;
+        font-size: 11px;
+    }
+
+    th, td {
+        padding: 6px;
+        border-bottom: 1px solid #aaa;
     }
 
     .table-container {
         overflow: visible;
     }
+
+    .reports-page .search-panel {
+        display: none;
+    }
+
+    .panel {
+        break-inside: avoid;
+    }
+
 }

@@ -1,4 +1,7 @@
+
 <!DOCTYPE html>
+<!-- Damario Foster - 2507304 -->
+<!-- Add remaining group members and lab day/time -->
 <html lang="en">
 
 <head>
@@ -6,10 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Munro College | Student Reports</title>
     <link rel="stylesheet" href="../ASSETS/finance.css">
-    <script src="../ASSETS/reports.js" defer></script>
 </head>
 
-<body>
+<body class="reports-page">
 
     <header>
         <img src="../ASSETS/munroLogo.webp" alt="Munro College Logo" class="logo">
@@ -22,7 +24,9 @@
     <nav>
         <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="finance.html">Finances</a></li>
+            <li id="adminLink"><a href="admin.html">Administration</a></li>
+            <li id="financeLink"><a href="finance.html">Finances</a></li>
+            <li id="teacherLink"><a href="instructor.html">Instructor</a></li>
             <li><a href="reports.html" class="active">Reports</a></li>
         </ul>
     </nav>
@@ -33,7 +37,7 @@
         <p>Search and view student, academic and financial records.</p>
 
         <!-- Search and Filters -->
-        <section class="panel">
+        <section class="panel search-panel">
 
             <h2>Search Student Records</h2>
 
@@ -47,6 +51,10 @@
                 <select id="classFilter">
                     <option value="all">All Classes</option>
                 </select>
+
+                <label for="yearFilter">Academic Year</label>
+                <input type="text" id="yearFilter"
+                    placeholder="All Years">
 
                 <label for="semesterFilter">Semester</label>
                 <select id="semesterFilter">
@@ -62,6 +70,7 @@
             </div>
 
             <div class="table-container">
+
                 <table>
                     <thead>
                         <tr>
@@ -74,6 +83,7 @@
 
                     <tbody id="studentBody"></tbody>
                 </table>
+
             </div>
 
         </section>
@@ -83,9 +93,17 @@
 
             <h2>Student Profile</h2>
 
-            <p><strong>Student ID:</strong> <span id="profileId"></span></p>
-            <p><strong>Name:</strong> <span id="profileName"></span></p>
-            <p><strong>Class:</strong> <span id="profileClass"></span></p>
+            <p><strong>Student ID:</strong>
+                <span id="profileId"></span></p>
+
+            <p><strong>Name:</strong>
+                <span id="profileName"></span></p>
+
+            <p><strong>Class:</strong>
+                <span id="profileClass"></span></p>
+
+            <p><strong>Academic Year:</strong>
+                <span id="profileYear"></span></p>
 
         </section>
 
@@ -95,10 +113,12 @@
             <h2>Academic Records</h2>
 
             <div class="table-container">
+
                 <table>
                     <thead>
                         <tr>
                             <th>Subject</th>
+                            <th>Academic Year</th>
                             <th>Semester</th>
                             <th>Grade</th>
                         </tr>
@@ -106,6 +126,7 @@
 
                     <tbody id="academicBody"></tbody>
                 </table>
+
             </div>
 
         </section>
@@ -116,9 +137,11 @@
             <h2>Financial Records</h2>
 
             <div class="table-container">
+
                 <table>
                     <thead>
                         <tr>
+                            <th>Academic Year</th>
                             <th>Semester</th>
                             <th>Tuition</th>
                             <th>Amount Paid</th>
@@ -129,6 +152,7 @@
 
                     <tbody id="financialBody"></tbody>
                 </table>
+
             </div>
 
         </section>
@@ -138,9 +162,11 @@
     <footer>
         <p>Munro College | School Management Portal</p>
     </footer>
+
     <script src="../ASSETS/storage.js"></script>
     <script src="../ASSETS/auth.js"></script>
     <script>guardPage(["admin", "teacher", "student"]);</script>
-</body>
+    <script src="../ASSETS/reports.js"></script>
 
+</body>
 </html>
