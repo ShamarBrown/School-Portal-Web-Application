@@ -30,31 +30,13 @@ function dbSet(key, value) {
     return false;
   }
 }
-// Hash text so ID numbers aren't stored in plain text 
-async function hashText(text) {
-  if (window.crypto && window.crypto.subtle) {
-    const data = new TextEncoder().encode(text);
-    const buffer = await crypto.subtle.digest("SHA-256", data);
-    return Array.from(new Uint8Array(buffer))
-      .map(b => b.toString(16).padStart(2, "0"))
-      .join("");
-  }
-  // Fallback when crypto.subtle is unavailable
-  let hash = 5381;
-  for (const char of text) {
-    hash = ((hash << 5) + hash + char.charCodeAt(0)) >>> 0;
-  }
-  return "f" + hash.toString(16);
-}
 // Seeds default data on first load only
 async function initDatabase() {
   const users = dbGet(DBkeys.USERS);
   if (!Array.isArray(users) || users.length === 0) {
     dbSet(DBkeys.USERS, [
-      { fullName: "System Admin", email: "admin@munrocollege.edu.jm",
-        role: "admin", idHash: await hashText("ADMIN001") },
-      { fullName: "Sample Teacher", email: "teacher@munrocollege.edu.jm",
-        role: "teacher", idHash: await hashText("TCH001") }
+      { fullName: "System Admin", email: "admin@munrocollege.edu.jm", role: "admin" },
+      { fullName: "Sample Teacher", email: "teacher@munrocollege.edu.jm", role: "teacher" }
     ]);
   }
 

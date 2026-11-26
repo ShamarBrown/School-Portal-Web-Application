@@ -15,10 +15,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const nameInput = document.getElementById("fullName");
   const emailInput = document.getElementById("email");
-  const idInput = document.getElementById("ID");
  
-  // The form has no ID-error or general-error element, so they are create here
-  const idError = makeErrorElement("idError", idInput, "afterend");
+  // The form has no general-error element, so it is created here
   const formError = makeErrorElement("formError", form.querySelector("button"), "beforebegin");
 
   form.addEventListener("submit", async (event) => {
@@ -26,11 +24,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const fullName = nameInput.value.trim();
     const email = emailInput.value.trim();
-    const idNumber = idInput.value.trim();
 
     setText("nameError", "");
     setText("emailError", "");
-    idError.textContent = "";
     formError.textContent = "";
 
     let valid = true;
@@ -42,13 +38,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       setText("emailError", "Enter a valid email address.");
       valid = false;
     }
-    if (!/^[A-Za-z0-9-]{4,15}$/.test(idNumber)) {
-      idError.textContent = "ID must be 4-15 letters, numbers or hyphens.";
-      valid = false;
-    }
     if (!valid) return;
 
-    const result = await login(fullName, email, idNumber);
+    const result = await login(fullName, email);
     if (!result.ok) {
       formError.textContent = result.message;
       return;

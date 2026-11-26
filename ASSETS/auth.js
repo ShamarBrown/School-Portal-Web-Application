@@ -50,7 +50,7 @@ function getSession() {
 }
 // Login, role is found from the matching record
 // Returns ok: true it returns the role but if ok: false it returns message
-async function login(fullName, email, idNumber) {
+async function login(fullName, email) {
   const wait = getLockoutremaining();
   if (wait > 0) {
     return { ok: false, message: `Too many failed attempts. Please wait ${wait} seconds.` };
@@ -58,22 +58,18 @@ async function login(fullName, email, idNumber) {
 
   const name = fullName.trim().toLowerCase();
   const mail = email.trim().toLowerCase();
-  const id = idNumber.trim();
-  // Staff (admin / teacher): the ID is compared as a hash
-  const idHash = await hashText(id);
+  // Staff (admin / teacher)
   const staff = dbGet(DBkeys.USERS).find(u =>
     String(u.fullName).trim().toLowerCase() === name &&
-    String(u.email).trim().toLowerCase() === mail &&
-    u.idHash === idHash
+    String(u.email).trim().toLowerCase() === mail
   );
   if (staff) {
     clearLockout();
-    createSession(id, staff.fullName, staff.role);
+    createSession(staff.email, staff.fullName, staff.role);
     return { ok: true, role: staff.role };
   }
   // Students
   const student = dbGet(DBkeys.STUDENTS).find(s =>
-    String(s.studentId).trim() === id &&
     String(s.email).trim().toLowerCase() === mail &&
     String(s.fullName).trim().toLowerCase() === name
   );
