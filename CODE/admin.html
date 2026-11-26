@@ -12,12 +12,17 @@
 
 <body>
     <header>School portal <span>Administration</span></header>
+    <nav aria-label="Administration">
+    <a href="finance.html">Finance</a>
+    <a href="reports.html">Reports</a>
+</nav>
     <main>
         <h1>Student registry</h1>
         <section>
             <h2 id="formTitle">Register a student</h2>
             <form id="registry"><label>Student ID<input id="studentId" required maxlength="24"></label>
                 <label>Full name<input id="fullName" required maxlength="90"></label>
+                <label>Email <input id="studentEmail" type="email" required maxlength="120"></label>
                 <label>Semester<select id="semester">
                         <option>Semester 1</option>
                         <option>Semester 2</option>
@@ -30,7 +35,16 @@
             </form>
         </section>
         <section>
-            <h2>Registered students</h2><label>Filter by semester<select id="filter">
+            <h2>Registered students</h2><label>Search by name or ID
+    <input id="studentSearch" type="search">
+</label>
+<label>Filter by class
+    <input id="classFilter" placeholder="e.g. Form 3A">
+</label>
+<label>Filter by academic year
+    <input id="yearFilter" placeholder="e.g. 2026-2027">
+</label>
+            <label>Filter by semester<select id="filter">
                     <option value="">All semesters</option>
                     <option>Semester 1</option>
                     <option>Semester 2</option>
@@ -38,16 +52,16 @@
             <div class="scroll">
                 <table>
                     <thead>
-                        <tr>
-                            <th scope="col">Student ID</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Semester</th>
-                            <th scope="col">
-                            <th scope="col">Class/Form</th>
-                            <th scope="col">Academic year</th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="rows"></tbody>
+    <tr>
+        <th scope="col">Student ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Semester</th>
+        <th scope="col">Class/Form</th>
+        <th scope="col">Academic year</th>
+        <th scope="col">Actions</th>
+    </tr>
+</thead>
+<tbody id="rows"></tbody>
                 </table>
             </div>
         </section>
