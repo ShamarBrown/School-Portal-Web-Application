@@ -5,7 +5,7 @@ const Max_attempts = 3;
 const lockout_seconds = 30;
 
 const Rolehomepages = {
-  admin: "admin-dashboard.html",
+  admin: "admin.html",
   teacher: "teacher-dashboard.html",
   student: "student-dashboard.html"
 };

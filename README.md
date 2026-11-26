@@ -1,3 +1,5 @@
 # School-Portal-Web-Application
 
-We got this
+Admin login : System Admin
+Passowrd: admin@munrocollege.edu.jm
+
