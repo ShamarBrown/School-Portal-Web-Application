@@ -1,197 +1,259 @@
-// Temporary student records
-let students = [
-    { id: "ST001", name: "John Brown", class: "10A" },
-    { id: "ST002", name: "David Smith", class: "10B" },
-    { id: "ST003", name: "James Williams", class: "11A" }
-];
 
-// Load records from localStorage
-let grades = JSON.parse(localStorage.getItem("grades")) || [];
-let tuition = JSON.parse(localStorage.getItem("tuition")) || [];
-let payments = JSON.parse(localStorage.getItem("payments")) || [];
+// Damario Foster - 2507304
+// Add remaining group members and lab day/time
 
-let selectedStudent = null;
-
-// Format currency
-function currency(amount) {
-    return "JMD $" + amount.toFixed(2);
+if (requireRole(["admin", "teacher", "student"])) {
+    initializeReports();
 }
 
-// Populate class filter
-function loadClasses() {
-    let classes = [...new Set(students.map(s => s.class))];
+function initializeReports() {
 
-    classes.forEach(className => {
-        document.getElementById("classFilter").add(
-            new Option(className, className)
-        );
+    const byId = id => document.getElementById(id);
+    let session = getSession();
+
+    // Load students from shared database
+    let students = dbGet(DBkeys.STUDENTS).map(s => ({
+        id: String(s.studentId),
+        name: s.fullName,
+        class: s.classForm || s.grade || "Unassigned",
+        academicYear: s.academicYear || "",
+        semester: s.semester || "",
+        grades: s.grades || []
+    }));
+
+    // Include students from administrator registry
+    dbGet("cit2011.students.v1").forEach(s => {
+        students = students.filter(student => student.id !== String(s.id));
+        students.push({
+            id: String(s.id),
+            name: s.name,
+            class: s.classForm || "Unassigned",
+            academicYear: s.academicYear || "",
+            semester: s.semester || "",
+            grades: s.grades || []
+        });
     });
-}
 
-// Search and display students
-function displayStudents() {
-    let search = document.getElementById("studentSearch")
-        .value.toLowerCase();
+    // Students can only view their own records
+    if (session.role === "student") {
+        students = students.filter(s => s.id === String(session.id));
+    }
 
-    let classFilter = document.getElementById("classFilter").value;
-    let body = document.getElementById("studentBody");
+    // Role-based navigation
+    byId("adminLink").hidden = session.role !== "admin";
+    byId("financeLink").hidden = session.role !== "admin";
+    byId("teacherLink").hidden = session.role !== "teacher";
 
-    body.innerHTML = "";
+    let tuition = dbGet("mc-tuition");
+    let payments = dbGet(DBkeys.TRANSACTIONS);
+    let selectedStudent = null;
 
+    // Standardize semester values
+    function normalizeSemester(semester) {
+        return String(semester || "").replace("Semester ", "");
+    }
+
+    // Load academic records
+    let grades = dbGet(DBkeys.GRADES).map(g => ({
+        studentId: String(g.studentId ?? g.id),
+        subject: g.subject,
+        semester: normalizeSemester(g.semester),
+        academicYear: g.academicYear || "",
+        grade: g.score ?? g.average ?? g.grade
+    }));
+
+    // Include administrator grades without duplicates
     students.forEach(student => {
+        student.grades.forEach(g => {
+            let semester = normalizeSemester(g.semester || student.semester);
+            let academicYear = g.academicYear || student.academicYear;
 
-        let matchesSearch =
-            student.name.toLowerCase().includes(search) ||
-            student.id.toLowerCase().includes(search);
+            let existing = grades.some(record =>
+                record.studentId === student.id &&
+                record.subject.toLowerCase() === g.subject.toLowerCase() &&
+                record.semester === semester &&
+                record.academicYear === academicYear);
 
-        let matchesClass =
-            classFilter === "all" || student.class === classFilter;
-
-        if (matchesSearch && matchesClass) {
-            let row = body.insertRow();
-
-            row.insertCell().textContent = student.id;
-            row.insertCell().textContent = student.name;
-            row.insertCell().textContent = student.class;
-
-            let button = document.createElement("button");
-            button.textContent = "View Profile";
-
-            button.addEventListener("click", function() {
-                viewProfile(student.id);
-            });
-
-            row.insertCell().appendChild(button);
-        }
+            if (!existing) {
+                grades.push({
+                    studentId: student.id,
+                    subject: g.subject,
+                    semester,
+                    academicYear,
+                    grade: g.score ?? g.grade
+                });
+            }
+        });
     });
 
-    if (body.rows.length === 0) {
-        body.innerHTML =
-            '<tr><td colspan="4">No students found.</td></tr>';
+    // Currency calculations
+    function cents(amount) {
+        return Math.round(amount * 100);
     }
-}
 
-// Display student profile
-function viewProfile(studentId) {
-    selectedStudent = students.find(s => s.id === studentId);
-
-    if (!selectedStudent) return;
-
-    document.getElementById("profileId").textContent =
-        selectedStudent.id;
-
-    document.getElementById("profileName").textContent =
-        selectedStudent.name;
-
-    document.getElementById("profileClass").textContent =
-        selectedStudent.class;
-
-    document.getElementById("studentProfile").hidden = false;
-    document.getElementById("academicRecords").hidden = false;
-    document.getElementById("financialRecords").hidden = false;
-
-    displayAcademicRecords();
-    displayFinancialRecords();
-}
-
-// Display academic records
-function displayAcademicRecords() {
-    let body = document.getElementById("academicBody");
-    let semester = document.getElementById("semesterFilter").value;
-
-    body.innerHTML = "";
-
-    let records = grades.filter(g =>
-        g.studentId === selectedStudent.id &&
-        (semester === "all" || String(g.semester) === semester)
-    );
-
-    records.forEach(record => {
-        let row = body.insertRow();
-
-        row.insertCell().textContent = record.subject;
-        row.insertCell().textContent = record.semester;
-        row.insertCell().textContent = record.grade;
-    });
-
-    if (records.length === 0) {
-        body.innerHTML =
-            '<tr><td colspan="3">No academic records found.</td></tr>';
+    function currency(amount) {
+        return "JMD $" + Number(amount).toFixed(2);
     }
-}
 
-// Determine payment status
-function getStatus(amount, paid) {
-    if (paid >= amount) {
-        return "Paid";
-    } else if (paid > 0) {
-        return "Pending";
-    } else {
+    function getStatus(amount, paid) {
+        if (cents(paid) >= cents(amount)) return "Paid";
+        if (paid > 0) return "Pending";
         return "Outstanding";
     }
-}
 
-// Display financial records
-function displayFinancialRecords() {
-    let body = document.getElementById("financialBody");
-    let semester = document.getElementById("semesterFilter").value;
-
-    body.innerHTML = "";
-
-    let records = tuition.filter(t =>
-        t.studentId === selectedStudent.id &&
-        (semester === "all" || String(t.semester) === semester)
-    );
-
-    records.forEach(record => {
-
-        let paid = payments.filter(p =>
-            p.studentId === record.studentId &&
-            p.semester === record.semester
-        ).reduce((sum, p) => sum + p.amount, 0);
-
-        let balance = record.amount - paid;
-        let status = getStatus(record.amount, paid);
-
+    // Safely create table rows
+    function addRow(body, values) {
         let row = body.insertRow();
+        values.forEach(value => {
+            row.insertCell().textContent = value;
+        });
+        return row;
+    }
 
-        row.insertCell().textContent = record.semester;
-        row.insertCell().textContent = currency(record.amount);
-        row.insertCell().textContent = currency(paid);
-        row.insertCell().textContent = currency(balance);
+    function emptyRow(body, message, columns) {
+        let cell = body.insertRow().insertCell();
+        cell.colSpan = columns;
+        cell.textContent = message;
+    }
 
-        let statusCell = row.insertCell();
+    // Populate class filter
+    let classes = [...new Set(students.map(s => String(s.class)))];
 
-        statusCell.textContent = status;
-        statusCell.className = "status " + status.toLowerCase();
+    classes.sort().forEach(className => {
+        byId("classFilter").add(new Option(className, className));
     });
 
-    if (records.length === 0) {
-        body.innerHTML =
-            '<tr><td colspan="5">No financial records found.</td></tr>';
+    // Search and display students
+    function displayStudents() {
+        let body = byId("studentBody");
+        let search = byId("studentSearch").value.trim().toLowerCase();
+        let classFilter = byId("classFilter").value;
+
+        body.innerHTML = "";
+
+        students.forEach(student => {
+            let matchesSearch = student.name.toLowerCase().includes(search) ||
+                student.id.toLowerCase().includes(search);
+
+            let matchesClass = classFilter === "all" ||
+                String(student.class) === classFilter;
+
+            if (matchesSearch && matchesClass) {
+                let row = addRow(body, [
+                    student.id, student.name, student.class
+                ]);
+
+                let button = document.createElement("button");
+                button.type = "button";
+                button.textContent = "View Profile";
+                button.addEventListener("click", () => viewProfile(student.id));
+
+                row.insertCell().appendChild(button);
+            }
+        });
+
+        if (!body.rows.length) {
+            emptyRow(body, "No students found.", 4);
+        }
     }
-}
 
-// Search and filter events
-document.getElementById("studentSearch")
-    .addEventListener("input", displayStudents);
+    // Display selected student profile
+    function viewProfile(studentId) {
+        selectedStudent = students.find(s => s.id === studentId);
+        if (!selectedStudent) return;
 
-document.getElementById("classFilter")
-    .addEventListener("change", displayStudents);
+        byId("profileId").textContent = selectedStudent.id;
+        byId("profileName").textContent = selectedStudent.name;
+        byId("profileClass").textContent = selectedStudent.class;
+        byId("profileYear").textContent =
+            selectedStudent.academicYear || "Not assigned";
 
-document.getElementById("semesterFilter")
-    .addEventListener("change", function() {
+        byId("studentProfile").hidden = false;
+        byId("academicRecords").hidden = false;
+        byId("financialRecords").hidden = false;
 
+        refreshReport();
+    }
+
+    // Match selected student and report filters
+    function matchesReport(record) {
+        let semester = byId("semesterFilter").value;
+        let year = byId("yearFilter").value.trim();
+
+        return String(record.studentId) === selectedStudent.id &&
+            (semester === "all" ||
+                normalizeSemester(record.semester) === semester) &&
+            (!year || record.academicYear === year);
+    }
+
+    // Display academic records
+    function displayAcademicRecords() {
+        let body = byId("academicBody");
+        body.innerHTML = "";
+
+        grades.filter(matchesReport).forEach(g => {
+            addRow(body, [
+                g.subject,
+                g.academicYear || "Not assigned",
+                g.semester ? "Semester " + g.semester : "Not assigned",
+                typeof g.grade === "number" ? g.grade + "%" : g.grade
+            ]);
+        });
+
+        if (!body.rows.length) {
+            emptyRow(body, "No academic records found.", 4);
+        }
+    }
+
+    // Display financial records
+    function displayFinancialRecords() {
+        let body = byId("financialBody");
+        body.innerHTML = "";
+
+        tuition.filter(matchesReport).forEach(record => {
+
+            let paid = payments.filter(p =>
+                String(p.studentId) === String(record.studentId) &&
+                normalizeSemester(p.semester) === normalizeSemester(record.semester) &&
+                p.academicYear === record.academicYear
+            ).reduce((sum, p) => sum + cents(p.amount), 0) / 100;
+
+            let balance = (cents(record.amount) - cents(paid)) / 100;
+            let status = getStatus(record.amount, paid);
+
+            let row = addRow(body, [
+                record.academicYear,
+                "Semester " + normalizeSemester(record.semester),
+                currency(record.amount),
+                currency(paid),
+                currency(balance),
+                status
+            ]);
+
+            row.cells[5].className = "status " + status.toLowerCase();
+        });
+
+        if (!body.rows.length) {
+            emptyRow(body, "No financial records found.", 6);
+        }
+    }
+
+    // Refresh selected student's report
+    function refreshReport() {
         if (selectedStudent) {
             displayAcademicRecords();
             displayFinancialRecords();
         }
-    });
+    }
 
-// Print student report
-document.getElementById("printReport")
-    .addEventListener("click", function() {
+    // Search and filter events
+    byId("studentSearch").addEventListener("input", displayStudents);
+    byId("classFilter").addEventListener("change", displayStudents);
+    byId("semesterFilter").addEventListener("change", refreshReport);
+    byId("yearFilter").addEventListener("input", refreshReport);
 
+    // Print selected student report
+    byId("printReport").addEventListener("click", function() {
         if (!selectedStudent) {
             alert("Please select a student first.");
             return;
@@ -200,6 +262,10 @@ document.getElementById("printReport")
         window.print();
     });
 
-// Initialize page
-loadClasses();
-displayStudents();
+    displayStudents();
+
+    // Automatically display student's own profile
+    if (session.role === "student" && students.length === 1) {
+        viewProfile(students[0].id);
+    }
+}

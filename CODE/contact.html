@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta name="viewport" content="width=device-width, initial-scale= 1.0">
     <title> CONTACT US </title>
      <link rel="stylesheet" href="../ASSETS/style.css">
 </head>
@@ -12,9 +12,9 @@
                 
         <header>
             
-           <img src="../ASSETS/munroLogo.webp" class="Logo"> 
+           <img src="../ASSETS/munroLogo.webp" alt="Logo" class="Logo"> 
            
-           <h1>CONTACT US </h1>
+           <h1 style="font-size:2.7vw">CONTACT US </h1>
         </header>
         
             <nav>
@@ -28,27 +28,27 @@
             <div class="centerAlign">
             <div class="whiteFont">
              <br>
-             <h1>PHONE NUMBERS</h1>
+             <h1 style="font-size:2.7vw">PHONE NUMBERS</h1>
              <p>8765459345</p>
              <br>
-             <h2>Principal's Office</h2>
+             <h2 style="font-size:2.3vw">Principal's Office</h2>
              <p>(876) 545-9345</p>
              <br>
-             <h2>Bursar's Office</h2>
+             <h2 style="font-size:2.3vw">Bursar's Office</h2>
              <p>(876) 545-8575 <br>
                 (876) 545-8577</p>
              <br>
-            <h2>Vice Principal's Office</h2>
+            <h2 style="font-size:2.3vw">Vice Principal's Office</h2>
             <p>(876) 545-9303</p>
              <br>
-            <h2>Guidance Department</h2>
+            <h2 style="font-size:2.3vw">Guidance Department</h2>
             <p>(876) 337-1620</p>
              <br>
-            <h1>EMAILS</h1>
-            <h2>General Email</h2>
+            <h1 style="font-size:2.7vw">EMAILS</h1>
+            <h2 style="font-size:2.3vw">General Email</h2>
             <p>info@munrocollege.edu.jm</p>
               <br>
-            <h1>Administration</h1>
+            <h1 style="font-size:2.7vw">Administration</h1>
             <p>administration@munrocollege.edu.jm</p>
             <br>
             <h1>ADDRESS</h1>
@@ -59,11 +59,11 @@
             <div class="whiteFont">
             <div class="centerAlign">
             <h1>CONTACT FORM</h1>
-            <h2>Fill out the form below to get in contact with us.</h2>
+            <h2 style="font-size:2.3vw">Fill out the form below to get in contact with us.</h2>
             
              <br>
             <form id = "contactForm" novalidate>
-            <form action="/action_page.php">
+            
             <label>NAME</label>
             <br>
             <input type="text" id="fullName" name="fullName" placeholder="your Name">
@@ -75,13 +75,15 @@
              <br>
             <input type="email" id="email" name="email" placeholder="Your Email">
              <br>
+             <small class="error" id="nameError"></small>
+             
             <label for="subject">INQURY</label>
             <br>
             <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
             <br>
             <input type="submit" value="Submit">
             </form>
-            </form>
+          
             </div>
             </div>
         
