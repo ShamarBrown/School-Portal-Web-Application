@@ -53,7 +53,7 @@ function setText(id, message) {
   const el = document.getElementById(id);
   if (el) el.textContent = message;
 }
-// Creates a <small class="error"> 
+// Creates a small class="error" 
 // position is "beforebegin" or "afterend"
 function makeErrorElement(id, anchor, position) {
   let el = document.getElementById(id);

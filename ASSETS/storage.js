@@ -2,7 +2,7 @@
 /* storage.js, storage helpers and first-run seeding */
 const DBkeys = {
   USERS: "mc-users",       //admin + teacher accounts     
-  STUDENTS: "mc-students",    //student 3 saves here  
+  STUDENTS: "mc-students",      
   TEACHERS: "mc-teachers",
   SUBJECTS: "mc-subjects",
   GRADES: "mc-grades",
